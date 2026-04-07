@@ -8,8 +8,6 @@ import {
 import jwt from "jsonwebtoken";
 import { redis } from "../configs/redis.config.js";
 
-export const getAllUsersController = () => {};
-
 //* Signup Logic goes here
 export const signupController = async (req, res) => {
   const { name, email, password } = req.body;
