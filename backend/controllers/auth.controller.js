@@ -148,7 +148,7 @@ export const logoutController = async (req, res) => {
 
     return res.status(200).json({ message: "Logout successful" });
   } catch (error) {
-    console.log("Error in logout controller");
+    console.log("Error in logout controller", error.message);
     res
       .status(500)
       .json({ message: `Internal server error - ${error.message}` });
@@ -157,5 +157,11 @@ export const logoutController = async (req, res) => {
 
 export const getProfileController = (req, res) => {
   try {
-  } catch (error) {}
+    return res.json({ user: req.user });
+  } catch (error) {
+    console.log("Error in getProfile controller", error.message);
+    return res
+      .status(500)
+      .json({ message: "Server Error", error: error.message });
+  }
 };

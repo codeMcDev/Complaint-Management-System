@@ -4,6 +4,7 @@ import connectDB from "./configs/db.config.js";
 import complaintsRoutes from "./routes/complaints.route.js";
 import authRoutes from "./routes/auth.route.js";
 import path from "path";
+import cookieParser from "cookie-parser";
 
 dotenv.config();
 
@@ -17,6 +18,7 @@ const __dirname = path.resolve();
 
 //middlewares
 server.use(express.json());
+server.use(cookieParser());
 
 //Routes
 server.use("/api/complaints", complaintsRoutes);

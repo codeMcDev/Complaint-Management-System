@@ -1,8 +1,10 @@
 import { Bell, Search, Settings, ShieldUser } from "lucide-react";
 import React from "react";
 import { Link } from "react-router-dom";
+import { useAuthStore } from "../stores/useAuthStore";
 
 const AdminNavBar = () => {
+  const { logout } = useAuthStore();
   return (
     <header className="flex items-center justify-between whitespace-nowrap border-b border-solid border-[#e7edf3] dark:border-slate-800 bg-white dark:bg-slate-900 px-10 py-3">
       <div className="flex items-center gap-8">
@@ -70,12 +72,12 @@ const AdminNavBar = () => {
             className="rounded-full object-cover"
           />
         </div>
-        <Link
-          to={"/logout"}
+        <button
+          onClick={() => logout()}
           className="flex items-center justify-center rounded-lg h-10 px-4 bg-red-500 hover:bg-red-500/70 text-white text-sm font-bold transition-all shadow-sm"
         >
           Logout
-        </Link>
+        </button>
       </div>
     </header>
   );

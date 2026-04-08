@@ -12,16 +12,20 @@ import StatusTrackerPage from "./pages/StatusTrackerPage";
 import LoginPage from "./pages/LoginPage";
 import { useAuthStore } from "./stores/useAuthStore";
 import AdminDashboard from "./pages/AdminDashboard";
+import { useEffect } from "react";
 
 function App() {
-  const { user } = useAuthStore();
+  const { user, checkAuth } = useAuthStore();
+
+  useEffect(() => {
+    checkAuth();
+  }, [checkAuth]);
 
   return (
     <div className="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
       {user ? <AdminNavBar /> : <NavBar />}
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/logout" element={<HomePage />} />
         <Route
           path="/submit-complaint/anonymous"
           element={<SubmitPage isAnonymous={true} />}
