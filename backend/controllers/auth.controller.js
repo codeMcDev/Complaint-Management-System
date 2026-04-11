@@ -7,6 +7,9 @@ import {
 } from "../utils/generateAndStoreTokens.js";
 import jwt from "jsonwebtoken";
 import { redis } from "../configs/redis.config.js";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 export const getAllUsersController = () => {};
 
@@ -128,6 +131,49 @@ export const loginController = async (req, res) => {
     res
       .status(500)
       .json({ message: `Internal server error - ${error.message}` });
+  }
+};
+
+export const refreshAccessTokenController = async (req, res) => {
+  try {
+    const sessionToken = req.cookies.sessionToken || null;
+
+    if (!sessionToken)
+      return res.status(401).json({ message: "No valid session token" });
+
+    const decodedSessionToken = jwt.verify(
+      sessionToken,
+      process.env.JWT_SECRET,
+    );
+
+    const redisToken = await redis.get(
+      `sessionTokenFor:${decodedSessionToken.userId}`,
+    );
+
+    if (sessionToken !== redisToken)
+      return res.status(401).json({ message: "Invalid session token" });
+
+    const accessToken = jwt.sign(
+      { userId: decodedSessionToken.userId },
+      process.env.JWT_SECRET,
+      { expiresIn: process.env.JWT_ACCESS_EXPIRE_TIME },
+    );
+
+    res.cookie("accessToken", accessToken, {
+      maxAge: 15 * 60 * 1000,
+      httpOnly: true,
+      sameSite: "strict",
+      secure: process.env.NODE_ENV === "production",
+    });
+
+    return res
+      .status(201)
+      .json({ message: "Access token refreshed successfully" });
+  } catch (error) {
+    console.log("Error in refreshTokenController", error.message);
+    return res
+      .status(500)
+      .json({ message: "Server error", error: error.message });
   }
 };
 

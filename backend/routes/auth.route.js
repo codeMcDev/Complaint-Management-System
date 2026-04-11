@@ -5,6 +5,7 @@ import {
   loginController,
   logoutController,
   signupController,
+  refreshAccessTokenController,
 } from "../controllers/auth.controller.js";
 import { protectRoute } from "../middlewares/authMiddleware.js";
 
@@ -21,6 +22,9 @@ authRoutes.post("/login", loginController);
 
 //User Logout
 authRoutes.post("/logout", logoutController);
+
+//Refresh accessToken
+authRoutes.post("/refresh-token", refreshAccessTokenController);
 
 //Get user Profile
 authRoutes.get("/profile", protectRoute, getProfileController);

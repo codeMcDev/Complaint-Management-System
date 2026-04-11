@@ -19,7 +19,7 @@ export const generateTokens = (userId) => {
 export const storeSessionToken = async (userId, sessionToken) => {
   try {
     await redis.set(`sessionTokenFor:${userId}`, sessionToken, {
-      ex: 3 * 24 * 60 * 60,
+      ex: 60 * 60,
     });
   } catch (error) {
     console.log(error.message);
@@ -32,13 +32,13 @@ export const setCookies = (res, accessToken, sessionToken) => {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "strict",
-    maxAge: 30 * 60 * 1000,
+    maxAge: 15 * 60 * 1000,
   });
 
   res.cookie("sessionToken", sessionToken, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "strict",
-    maxAge: 3 * 24 * 60 * 60 * 1000,
+    maxAge: 60 * 60 * 1000,
   });
 };
