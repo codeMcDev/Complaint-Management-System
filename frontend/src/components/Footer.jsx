@@ -4,7 +4,7 @@ import React from "react";
 const Footer = () => {
   return (
     <footer className="inline-block w-full bottom-0 border-t border-slate-200 dark:border-slate-800 py-6 px-4">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+      <div className="w-full mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
         <div className="flex items-center gap-3">
           <p className="text-sm text-slate-500 dark:text-slate-400">
             <span className="text-md">&copy;</span> {new Date().getFullYear()} |

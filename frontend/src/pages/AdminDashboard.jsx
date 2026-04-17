@@ -19,6 +19,7 @@ import { useEffect } from "react";
 import DataTableRow from "../components/DataTableRow";
 import ReactPaginate from "react-paginate";
 import { useState } from "react";
+import AdminLayout from "../components/AdminLayout";
 
 const AdminDashboard = () => {
   const { complaints, getAllComplaints } = useComplaintStore();
@@ -40,7 +41,7 @@ const AdminDashboard = () => {
   };
 
   return (
-    <main className="flex-1 px-4 md:px-10 lg:px-40 py-8">
+    <AdminLayout>
       {/* <!-- Page Heading --> */}
       <div className="flex flex-wrap justify-between items-end gap-3 mb-8">
         <div className="flex min-w-72 flex-col gap-1">
@@ -168,13 +169,7 @@ const AdminDashboard = () => {
           </span>
         </div>
       </div>
-      {/* <!-- Footer-like Info --> */}
-      <div className="mt-8 flex items-center gap-2 justify-center text-xs text-slate-400">
-        <UserRoundCheck size={16} />
-        System Secured with Enterprise-grade Encryption. All interactions are
-        logged.
-      </div>
-    </main>
+    </AdminLayout>
   );
 };
 

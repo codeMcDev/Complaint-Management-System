@@ -24,6 +24,26 @@ export const getAllComplaintsController = async (_, res) => {
   }
 };
 
+export const viewComplaintDetailsController = async (req, res) => {
+  const { caseId } = req.params;
+  try {
+    const complaint = await Complaint.findOne({ caseId }).select(
+      "-accessKeyHash",
+    );
+
+    if (!complaint)
+      return res.status(404).json({ message: "Couldn't find the complaint" });
+
+    return res.status(200).json(complaint);
+  } catch (error) {
+    console.error("Error in getAllComplaints controller - ", error.message);
+    return res.status(500).json({
+      message: "Error fetching complaints - Internal server error",
+      error: error.message,
+    });
+  }
+};
+
 export const createComplaintController = async (req, res) => {
   //Get Uploaded files
   const evidence = req.files;

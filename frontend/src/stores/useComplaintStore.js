@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 export const useComplaintStore = create((set, get) => ({
   loading: false,
   complaints: [],
+  singleComplaint: null,
   newComplaintSuccess: false,
   lastComplaintCreated: null,
   trackedComplaint: null,
@@ -56,6 +57,18 @@ export const useComplaintStore = create((set, get) => ({
       return null;
     } finally {
       set({ loading: false });
+    }
+  },
+
+  fetchCaseDetail: async (caseId) => {
+    try {
+      const response = await axiosInstance.get(`/complaints/${caseId}`);
+      const foundCase = response.data;
+      set({ singleComplaint: response.data });
+      return foundCase;
+    } catch (error) {
+      console.log("An error occurred creating complaint", error.message);
+      toast.error(error.response.data?.message);
     }
   },
 

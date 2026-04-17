@@ -4,6 +4,7 @@ import {
   getAllComplaintsController,
   trackCaseStatusController,
   updateComplaintController,
+  viewComplaintDetailsController,
 } from "../controllers/complaints.controller.js";
 import secureUpload from "../middlewares/secureUpload.middleware.js";
 
@@ -20,10 +21,7 @@ complaintsRoutes.post(
 );
 
 //!Todo Admin View complaint details.
-// complaintsRoutes.get(
-//   "/complaint-details/:existingId",
-//   viewComplaintDetailsController,
-// );
+complaintsRoutes.get("/:caseId", viewComplaintDetailsController);
 
 //Success Page Complaint Details
 // complaintsRoutes.get(

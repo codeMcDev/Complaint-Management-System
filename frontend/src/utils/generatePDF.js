@@ -7,6 +7,7 @@ export function generateComplaintPdf(complaint) {
 
   const {
     caseNumber,
+    caseId,
     accessKey,
     reporterName,
     reporterEmail,
@@ -14,6 +15,7 @@ export function generateComplaintPdf(complaint) {
     priority,
     reportingMode,
     submittedAt,
+    createdAt,
     description,
     evidence = [],
   } = complaint;
@@ -52,8 +54,9 @@ export function generateComplaintPdf(complaint) {
   // Meta row: generated on…
   doc.setTextColor(60, 64, 67);
   cursorY += 18;
-  const generatedAt =
-    new Date(submittedAt || Date.now()).toLocaleString() + " GMT";
+  const generatedAt = new Date(submittedAt || Date.now()).toLocaleString(
+    "en-GB",
+  );
   doc.setFont("helvetica", "normal");
   doc.setFontSize(10);
   doc.text(`Generated on ${generatedAt}`, marginX, cursorY);
@@ -78,7 +81,7 @@ export function generateComplaintPdf(complaint) {
   doc.setTextColor(46, 52, 64);
   doc.text("ID:", marginX + 12, cursorY + 36);
   doc.setFont("helvetica", "bold");
-  doc.text(caseNumber || "N/A", marginX + 30, cursorY + 36);
+  doc.text(caseNumber || caseId || "N/A", marginX + 30, cursorY + 36);
 
   // Access key card
   const rightX = marginX + cardWidth + 16;
@@ -130,7 +133,7 @@ export function generateComplaintPdf(complaint) {
   valueStyle();
   doc.text(category || "N/A", marginX, cursorY);
   doc.text(
-    submittedAt ? new Date(submittedAt).toLocaleString() : "N/A",
+    new Date(submittedAt || createdAt).toLocaleString("en-GB"),
     marginX + colGap,
     cursorY,
   );

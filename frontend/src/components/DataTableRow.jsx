@@ -1,7 +1,8 @@
-import { Eye, EyeOff, User } from "lucide-react";
+import { EyeOff, User } from "lucide-react";
 import React from "react";
 import { formatDate } from "../utils/dateFormatter";
 import { Link } from "react-router-dom";
+import { ComplaintStatus } from "../utils/statusSwitcher";
 
 const DataTableRow = ({ complaints }) => {
   return (
@@ -45,7 +46,7 @@ const DataTableRow = ({ complaints }) => {
             </td>
             <td className="px-6 py-4">
               <span className="inline-flex items-center rounded-full bg-blue-100 dark:bg-blue-900/30 px-2.5 py-0.5 text-xs font-bold text-blue-700 dark:text-blue-400">
-                {complaint.status}
+                {ComplaintStatus(complaint.status)}
               </span>
             </td>
             <td className="px-6 py-4 text-right">
